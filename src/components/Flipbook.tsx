@@ -25,7 +25,7 @@ export function Flipbook({ src, epub, title }: { src: string; epub?: string; tit
     const doc = frame.current?.contentDocument;
     if (!doc?.head) return;
     const s = doc.createElementNS('http://www.w3.org/1999/xhtml', 'style');
-    s.textContent = 'html,body{background:transparent!important;background-image:none!important}';
+    s.textContent = ':root{color-scheme:light}html,body{background:transparent!important;background-image:none!important}';
     doc.head.appendChild(s);
   };
 

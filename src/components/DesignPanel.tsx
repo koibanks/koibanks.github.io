@@ -273,7 +273,7 @@ export function DesignPanel({ projects }: { projects: Project[] }) {
 
           <fieldset>
             <legend>Project page</legend>
-            <Range label="Work width" unit="px" min={700} max={1500} step={10} value={d.workWidth} onChange={(v) => set((x) => void (x.workWidth = v))} />
+            <Range label="Work width (% of screen)" unit="%" min={30} max={95} step={1} value={d.workWidth} onChange={(v) => set((x) => void (x.workWidth = v))} />
             <Range label="Folder step" unit="px" min={16} max={90} value={d.stack.step} onChange={(v) => set((x) => void (x.stack.step = v))} />
             <Range label="Tab height" unit="px" min={22} max={60} value={d.stack.tabHeight} onChange={(v) => set((x) => void (x.stack.tabHeight = v))} />
             <Range label="Tab width" unit="%" min={10} max={21} value={d.stack.tabWidth} onChange={(v) => set((x) => void (x.stack.tabWidth = v))} />

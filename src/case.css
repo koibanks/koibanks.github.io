@@ -5,7 +5,8 @@
    ========================================================================== */
 .case {
   /* defaults; the Design panel overrides these (src/data/design.json) */
-  --work-w: var(--d-work-w, 1100px);
+  /* Design panel width (% of screen), but never too narrow to read on small screens */
+  --work-w: max(var(--d-work-w, 46vw), min(92vw, 720px));
   --stack-y: var(--d-stack-y, 46px);
   --tab-h: var(--d-tab-h, 36px);
   --tab-w: var(--d-tab-w, 18%);
@@ -100,6 +101,7 @@
 
 /* ---- The report (the work itself) ------------------------------------------ */
 .report {
+  color-scheme: light; /* the sheets are paper: keep their form fields light */
   container-type: inline-size; /* type sizes below are % of the sheet width */
   color: #111;
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; /* the slide keeps its own type, whatever the site font */
@@ -809,7 +811,7 @@ body.is-imaging .hv-remove {
   top: 0;
   border: 0;
   background: transparent;
-  color-scheme: normal;
+  color-scheme: light; /* must match the book page inside, or browsers paint it an opaque backdrop */
   transform-origin: 0 0;
 }
 .hv-flip-dl {

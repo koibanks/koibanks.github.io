@@ -213,7 +213,7 @@ export function designVars(d: Design): Record<string, string> {
     '--d-stack-y': `${d.stack.step}px`,
     '--d-tab-h': `${d.stack.tabHeight}px`,
     '--d-tab-w': `${d.stack.tabWidth}%`,
-    '--d-work-w': `${d.workWidth}px`,
+    '--d-work-w': `${d.workWidth}vw`, // % of the screen width
     '--cabinet': d.cabinet,
     '--folder-tilt': `${d.folderTilt}deg`,
     '--folder-size': `${d.folder.size}vw`,
