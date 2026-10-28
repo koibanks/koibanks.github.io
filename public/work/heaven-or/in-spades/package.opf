@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="bookid" xml:lang="en"
+  prefix="rendition: http://www.idpf.org/vocab/rendition/# ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0/">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:identifier id="bookid">urn:uuid:26eb43fa-89d2-51c5-8432-52cb968f56ce</dc:identifier>
+    <dc:title>In Spades — Issue 01: [heaven or] las vegas</dc:title>
+    <dc:language>en</dc:language>
+    <dc:subject>Las Vegas; casinos; gambling; design</dc:subject>
+    <dc:description>Issue 01 of In Spades, a flip-through magazine about Las Vegas, casino design and the psychology of gambling.</dc:description>
+    <meta property="dcterms:modified">2026-10-27T23:12:47Z</meta>
+    <meta property="rendition:layout">pre-paginated</meta>
+    <meta property="rendition:orientation">landscape</meta>
+    <meta property="rendition:spread">none</meta>
+    <meta property="ibooks:specified-fonts">true</meta>
+    <meta property="schema:accessMode">visual</meta>
+    <meta property="schema:accessMode">textual</meta>
+    <meta property="schema:accessibilityFeature">printPageNumbers</meta>
+    <meta property="schema:accessibilityFeature">tableOfContents</meta>
+    <meta property="schema:accessibilityHazard">none</meta>
+    <meta property="schema:accessibilitySummary">Fixed-layout magazine presented as a flipbook. Each page is an image of the printed layout with its text included for screen readers.</meta>
+  </metadata>
+  <manifest>
+    <item id="blank" href="img/blank.png" media-type="image/png"/>
+    <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
+    <item id="book" href="book.xhtml" media-type="application/xhtml+xml" properties="scripted svg"/>
+    <item id="css1" href="css/page-flip.css" media-type="text/css"/>
+    <item id="css2" href="css/book.css" media-type="text/css"/>
+    <item id="js1" href="js/page-flip.js" media-type="text/javascript"/>
+    <item id="js2" href="js/book.js" media-type="text/javascript"/>
+    <item id="i001" href="img/page001.jpg" media-type="image/jpeg" properties="cover-image"/>
+    <item id="i002" href="img/page002.jpg" media-type="image/jpeg"/>
+    <item id="i003" href="img/page003.jpg" media-type="image/jpeg"/>
+    <item id="i004" href="img/page004.jpg" media-type="image/jpeg"/>
+    <item id="i005" href="img/page005.jpg" media-type="image/jpeg"/>
+    <item id="i006" href="img/page006.jpg" media-type="image/jpeg"/>
+    <item id="i007" href="img/page007.jpg" media-type="image/jpeg"/>
+    <item id="i008" href="img/page008.jpg" media-type="image/jpeg"/>
+    <item id="i009" href="img/page009.jpg" media-type="image/jpeg"/>
+    <item id="i010" href="img/page010.jpg" media-type="image/jpeg"/>
+    <item id="i011" href="img/page011.jpg" media-type="image/jpeg"/>
+    <item id="i012" href="img/page012.jpg" media-type="image/jpeg"/>
+    <item id="i013" href="img/page013.jpg" media-type="image/jpeg"/>
+    <item id="i014" href="img/page014.jpg" media-type="image/jpeg"/>
+    <item id="i015" href="img/page015.jpg" media-type="image/jpeg"/>
+    <item id="i016" href="img/page016.jpg" media-type="image/jpeg"/>
+    <item id="i017" href="img/page017.jpg" media-type="image/jpeg"/>
+    <item id="i018" href="img/page018.jpg" media-type="image/jpeg"/>
+    <item id="i019" href="img/page019.jpg" media-type="image/jpeg"/>
+    <item id="i020" href="img/page020.jpg" media-type="image/jpeg"/>
+    <item id="i021" href="img/page021.jpg" media-type="image/jpeg"/>
+    <item id="i022" href="img/page022.jpg" media-type="image/jpeg"/>
+    <item id="i023" href="img/page023.jpg" media-type="image/jpeg"/>
+    <item id="i024" href="img/page024.jpg" media-type="image/jpeg"/>
+    <item id="i025" href="img/page025.jpg" media-type="image/jpeg"/>
+    <item id="i026" href="img/page026.jpg" media-type="image/jpeg"/>
+    <item id="i027" href="img/page027.jpg" media-type="image/jpeg"/>
+    <item id="i028" href="img/page028.jpg" media-type="image/jpeg"/>
+    <item id="i029" href="img/page029.jpg" media-type="image/jpeg"/>
+    <item id="i030" href="img/page030.jpg" media-type="image/jpeg"/>
+    <item id="i031" href="img/page031.jpg" media-type="image/jpeg"/>
+    <item id="i032" href="img/page032.jpg" media-type="image/jpeg"/>
+    <item id="i033" href="img/page033.jpg" media-type="image/jpeg"/>
+    <item id="i034" href="img/page034.jpg" media-type="image/jpeg"/>
+    <item id="i035" href="img/page035.jpg" media-type="image/jpeg"/>
+    <item id="i036" href="img/page036.jpg" media-type="image/jpeg"/>
+    <item id="i037" href="img/page037.jpg" media-type="image/jpeg"/>
+    <item id="i038" href="img/page038.jpg" media-type="image/jpeg"/>
+    <item id="i039" href="img/page039.jpg" media-type="image/jpeg"/>
+    <item id="i040" href="img/page040.jpg" media-type="image/jpeg"/>
+    <item id="i041" href="img/page041.jpg" media-type="image/jpeg"/>
+    <item id="i042" href="img/page042.jpg" media-type="image/jpeg"/>
+    <item id="i043" href="img/page043.jpg" media-type="image/jpeg"/>
+    <item id="i044" href="img/page044.jpg" media-type="image/jpeg"/>
+    <item id="i045" href="img/page045.jpg" media-type="image/jpeg"/>
+    <item id="i046" href="img/page046.jpg" media-type="image/jpeg"/>
+    <item id="i047" href="img/page047.jpg" media-type="image/jpeg"/>
+    <item id="i048" href="img/page048.jpg" media-type="image/jpeg"/>
+    <item id="i049" href="img/page049.jpg" media-type="image/jpeg"/>
+    <item id="i050" href="img/page050.jpg" media-type="image/jpeg"/>
+    <item id="i051" href="img/page051.jpg" media-type="image/jpeg"/>
+    <item id="i052" href="img/page052.jpg" media-type="image/jpeg"/>
+    <item id="i053" href="img/page053.jpg" media-type="image/jpeg"/>
+    <item id="i054" href="img/page054.jpg" media-type="image/jpeg"/>
+    <item id="i055" href="img/page055.jpg" media-type="image/jpeg"/>
+    <item id="i056" href="img/page056.jpg" media-type="image/jpeg"/>
+    <item id="i057" href="img/page057.jpg" media-type="image/jpeg"/>
+    <item id="i058" href="img/page058.jpg" media-type="image/jpeg"/>
+    <item id="i059" href="img/page059.jpg" media-type="image/jpeg"/>
+    <item id="i060" href="img/page060.jpg" media-type="image/jpeg"/>
+    <item id="i061" href="img/page061.jpg" media-type="image/jpeg"/>
+    <item id="i062" href="img/page062.jpg" media-type="image/jpeg"/>
+    <item id="i063" href="img/page063.jpg" media-type="image/jpeg"/>
+    <item id="i064" href="img/page064.jpg" media-type="image/jpeg"/>
+    <item id="i065" href="img/page065.jpg" media-type="image/jpeg"/>
+    <item id="i066" href="img/page066.jpg" media-type="image/jpeg"/>
+    <item id="i067" href="img/page067.jpg" media-type="image/jpeg"/>
+    <item id="i068" href="img/page068.jpg" media-type="image/jpeg"/>
+    <item id="i069" href="img/page069.jpg" media-type="image/jpeg"/>
+    <item id="i070" href="img/page070.jpg" media-type="image/jpeg"/>
+    <item id="i071" href="img/page071.jpg" media-type="image/jpeg"/>
+    <item id="i072" href="img/page072.jpg" media-type="image/jpeg"/>
+    <item id="i073" href="img/page073.jpg" media-type="image/jpeg"/>
+    <item id="i074" href="img/page074.jpg" media-type="image/jpeg"/>
+    <item id="i075" href="img/page075.jpg" media-type="image/jpeg"/>
+    <item id="i076" href="img/page076.jpg" media-type="image/jpeg"/>
+    <item id="i077" href="img/page077.jpg" media-type="image/jpeg"/>
+    <item id="i078" href="img/page078.jpg" media-type="image/jpeg"/>
+    <item id="i079" href="img/page079.jpg" media-type="image/jpeg"/>
+    <item id="i080" href="img/page080.jpg" media-type="image/jpeg"/>
+    <item id="i081" href="img/page081.jpg" media-type="image/jpeg"/>
+    <item id="i082" href="img/page082.jpg" media-type="image/jpeg"/>
+    <item id="i083" href="img/page083.jpg" media-type="image/jpeg"/>
+    <item id="i084" href="img/page084.jpg" media-type="image/jpeg"/>
+    <item id="i085" href="img/page085.jpg" media-type="image/jpeg"/>
+    <item id="i086" href="img/page086.jpg" media-type="image/jpeg"/>
+    <item id="i087" href="img/page087.jpg" media-type="image/jpeg"/>
+    <item id="i088" href="img/page088.jpg" media-type="image/jpeg"/>
+    <item id="i089" href="img/page089.jpg" media-type="image/jpeg"/>
+    <item id="i090" href="img/page090.jpg" media-type="image/jpeg"/>
+    <item id="i091" href="img/page091.jpg" media-type="image/jpeg"/>
+    <item id="i092" href="img/page092.jpg" media-type="image/jpeg"/>
+    <item id="i093" href="img/page093.jpg" media-type="image/jpeg"/>
+    <item id="i094" href="img/page094.jpg" media-type="image/jpeg"/>
+    <item id="i095" href="img/page095.jpg" media-type="image/jpeg"/>
+    <item id="i096" href="img/page096.jpg" media-type="image/jpeg"/>
+    <item id="i097" href="img/page097.jpg" media-type="image/jpeg"/>
+    <item id="i098" href="img/page098.jpg" media-type="image/jpeg"/>
+    <item id="i099" href="img/page099.jpg" media-type="image/jpeg"/>
+    <item id="i100" href="img/page100.jpg" media-type="image/jpeg"/>
+  </manifest>
+  <spine page-progression-direction="ltr">
+    <itemref idref="book"/>
+  </spine>
+</package>

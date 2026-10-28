@@ -1,0 +1,488 @@
+/* ==========================================================================
+   Alternative front pages: Tab index, File cabinet, Desk
+   (pick one in the Design panel, or set "home" in src/data/design.json)
+   ========================================================================== */
+
+.htabs,
+.hcab,
+.hdesk {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--bg);
+}
+.htabs.is-hidden,
+.hcab.is-hidden,
+.hdesk.is-hidden {
+  visibility: hidden;
+}
+
+/* ---- Shared caption ---------------------------------------------------- */
+.hcap {
+  position: absolute;
+  z-index: 30;
+  width: min(30vw, 420px);
+}
+.hcap-in {
+  animation: hcap-in 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes hcap-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+.hcap-n {
+  margin: 0 0 12px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+.hcap-n span {
+  color: var(--muted);
+}
+.hcap-title {
+  margin: 0 0 12px;
+  font-size: clamp(44px, 5.4vw, 96px);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+}
+.hcap-desc {
+  margin: 0 0 12px;
+  max-width: 32ch;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.hcap-open {
+  margin: 18px 0 0;
+  max-width: 320px;
+  border-top: 1px solid var(--line);
+}
+
+/* ==========================================================================
+   Tab index: full-width folders up the bottom of the screen, big tabs
+   Tweak: --stack-top (where the stack starts), --stack-h (its height)
+   ========================================================================== */
+.htabs {
+  --stack-top: 50vh;
+  --stack-h: 34vh;
+  --step: calc(var(--stack-h) / var(--n, 3));
+}
+.htabs-cap {
+  top: 104px;
+  left: clamp(16px, 2.4vw, 32px);
+}
+.htabs-stack {
+  position: absolute;
+  inset: 0;
+}
+.htabs-file {
+  --top: calc(var(--stack-top) + var(--k) * var(--step));
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--top);
+  bottom: 0;
+  z-index: calc(10 + var(--k));
+}
+.folder.htabs-folder {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: 4px 4px 0 0;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.is-current > .htabs-folder {
+  transform: translateY(-10px);
+}
+/* Big tab buttons */
+.ftab.htabs-tab {
+  --tab-h: 50px;
+  --tab-w: 22%;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-size: 15px;
+  gap: 12px;
+}
+.htabs-tab-n {
+  font-weight: 400;
+  opacity: 0.6;
+}
+.htabs-tab:hover,
+.htabs-tab[aria-current] {
+  color: #000;
+}
+.htabs-tab:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 4px;
+}
+/* The work: bottom tucked inside its folder; slides up when current */
+.htabs-sheet {
+  --h: calc(var(--top) + 6vh - 104px);
+  position: absolute;
+  z-index: 1;
+  right: 5vw;
+  bottom: calc(100% - 6vh);
+  height: var(--h);
+  width: min(58vw, calc(var(--h) * 1.5));
+  display: block;
+  background: #fff;
+  box-shadow: 0 30px 60px -24px rgb(0 0 0 / 0.7);
+  transform: translateY(calc(100% + 20px));
+  transition: transform 0.75s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+.is-current > .htabs-sheet {
+  transform: translateY(-10px);
+  transition-delay: 0.12s;
+}
+.htabs-sheet:hover {
+  transform: translateY(-20px);
+}
+.htabs-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover !important;
+}
+
+/* ==========================================================================
+   File cabinet
+   Tweak: --cab-w (width), --cab-top (where it starts), --cabinet color
+   (Design panel)
+   ========================================================================== */
+.hcab {
+  --cab-w: min(42vw, 520px);
+  --cab-top: 46vh;
+  --cab-h: calc(100vh - var(--cab-top) + 2vh);
+  --plate: 2.6vh;
+  --drawer-h: calc((var(--cab-h) - var(--plate) - 3vh) / var(--n, 3));
+  background: var(--bg);
+}
+.hcab-cap {
+  left: clamp(16px, 2.4vw, 32px);
+  bottom: 36px;
+}
+.hcab-stage {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(60vw - var(--cab-w) / 2);
+  width: var(--cab-w);
+}
+.hcab-body {
+  position: absolute;
+  z-index: 2;
+  top: var(--cab-top);
+  left: 0;
+  right: 0;
+  height: var(--cab-h);
+  border-radius: 8px 8px 0 0;
+  background:
+    linear-gradient(90deg, rgb(0 0 0 / 0.18), transparent 8%, transparent 92%, rgb(0 0 0 / 0.22)),
+    linear-gradient(180deg, rgb(255 255 255 / 0.18), transparent 30%),
+    var(--cabinet);
+  box-shadow:
+    inset 0 2px 0 rgb(255 255 255 / 0.35),
+    0 50px 80px -30px rgb(0 0 0 / 0.9);
+}
+.hcab-top {
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  top: -6px;
+  height: 14px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.35), rgb(0 0 0 / 0.1)), var(--cabinet);
+  box-shadow: 0 3px 6px rgb(0 0 0 / 0.35);
+}
+.hcab-drawer {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  top: calc(var(--plate) + var(--k) * var(--drawer-h));
+  height: calc(var(--drawer-h) - 1.4vh);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.6vh;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font: inherit;
+  color: #1c1c1c;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.28), rgb(0 0 0 / 0.08)),
+    var(--cabinet);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.5),
+    inset 0 -2px 0 rgb(0 0 0 / 0.18),
+    0 2px 3px rgb(0 0 0 / 0.3);
+  transition:
+    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.45s;
+}
+.hcab-drawer:hover {
+  transform: translateY(0.4vh);
+}
+/* Open: the drawer comes toward you and a dark gap opens above it */
+.hcab-drawer.is-open {
+  z-index: 2;
+  transform: translateY(1vh) scale(1.04);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.5),
+    0 18px 28px -10px rgb(0 0 0 / 0.75);
+}
+.hcab-drawer.is-open::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 1.6vh;
+  background: linear-gradient(180deg, #050505, #1b1b1b);
+  border-radius: 3px 3px 0 0;
+}
+.hcab-drawer:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
+.hcab-label {
+  padding: 3px;
+  border: 2px solid rgb(0 0 0 / 0.35);
+  border-radius: 3px;
+  background: rgb(0 0 0 / 0.08);
+}
+.hcab-card {
+  display: block;
+  padding: 5px 12px;
+  background: #f7f4ec;
+  font-family: var(--font-mono);
+  font-size: clamp(9px, 0.8vw, 12px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.hcab-handle {
+  width: 34%;
+  height: 1.4vh;
+  min-height: 9px;
+  border-radius: 99px;
+  background: linear-gradient(180deg, rgb(0 0 0 / 0.45), rgb(0 0 0 / 0.2));
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.45);
+}
+/* Each file is clipped at its drawer's top edge, so it rises out of the drawer */
+.hcab-slot {
+  position: absolute;
+  z-index: 3;
+  left: -12%;
+  right: -12%;
+  top: 92px;
+  bottom: calc(100vh - var(--cab-top) - var(--plate) - var(--k) * var(--drawer-h) + 0.6vh);
+  overflow: hidden;
+  pointer-events: none;
+}
+.folder.hcab-file {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 40px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 4% 0;
+  border-radius: 4px 4px 0 0;
+  pointer-events: auto;
+  transform: translateY(calc(100% + 60px)); /* fully below the drawer, tab included */
+  transition: transform 0.8s cubic-bezier(0.34, 1.25, 0.64, 1);
+}
+.hcab-file .ftab {
+  --tab-h: 30px;
+  --tab-w: 26%;
+}
+.is-current > .hcab-file {
+  transform: translateY(0);
+  transition-delay: 0.18s;
+}
+.hcab-file .folder-sheet {
+  flex: 1;
+  min-height: 0;
+}
+.hcab-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover !important;
+}
+
+/* ==========================================================================
+   Desk: folders side by side, current one in the middle
+   Tweak: --desk-w (folder width), --desk-gap (distance to the next folder)
+   ========================================================================== */
+.hdesk {
+  --desk-w: min(52vw, 760px);
+  --desk-gap: 62vw;
+  background: var(--bg);
+}
+.hdesk-track {
+  position: absolute;
+  inset: 0;
+}
+.folder.hdesk-folder {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: var(--desk-w);
+  padding: 18px 4% 22px;
+  cursor: pointer;
+  z-index: calc(10 - var(--abs));
+  opacity: calc(1 - var(--abs) * 0.45);
+  transform: translate(-50%, -50%) translateX(calc(var(--o) * var(--desk-gap))) rotate(calc(var(--o) * 4deg))
+    scale(calc(1 - var(--abs) * 0.14));
+  transition:
+    transform 0.85s cubic-bezier(0.34, 1.2, 0.64, 1),
+    opacity 0.5s ease;
+}
+.folder.hdesk-folder .ftab {
+  --tab-h: 30px;
+  --tab-w: 30%;
+}
+.hdesk-folder.is-current:hover .folder-sheet {
+  transform: translateY(-6px);
+}
+.hdesk-folder .folder-sheet {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.hdesk-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  height: auto;
+  object-fit: cover !important;
+}
+.hdesk-cap {
+  left: clamp(16px, 2.4vw, 32px);
+  bottom: 30px;
+  width: min(40vw, 560px);
+}
+.hdesk-cap .hcap-title {
+  font-size: clamp(40px, 4.4vw, 76px);
+}
+.hdesk-nav {
+  position: absolute;
+  z-index: 30;
+  right: clamp(16px, 2.4vw, 32px);
+  bottom: 34px;
+  display: flex;
+  gap: 18px;
+}
+.hdesk-dot {
+  padding: 2px 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: none;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+}
+.hdesk-dot:hover,
+.hdesk-dot.is-active {
+  color: var(--fg);
+  border-color: var(--fg);
+}
+
+/* ---- Mobile ---------------------------------------------------------------- */
+@media (max-width: 767px) {
+  .hcap {
+    width: auto;
+    left: 16px !important;
+    right: 16px;
+  }
+  .hcap-title {
+    font-size: 40px;
+  }
+  .hcap-desc {
+    font-size: 14px;
+  }
+  .hcap-open {
+    display: none;
+  }
+
+  .htabs {
+    --stack-top: 60vh;
+    --stack-h: 26vh;
+  }
+  .htabs-cap {
+    top: 70px;
+  }
+  .ftab.htabs-tab {
+    --tab-h: 36px;
+    --tab-w: 21%;
+    min-width: 0;
+    font-size: 10px;
+    padding: 0 6px;
+  }
+  .htabs-tab-n {
+    display: none;
+  }
+  .htabs-sheet {
+    --h: calc(var(--top) + 6vh - 296px); /* starts below the caption */
+    right: 6vw;
+    width: 88vw;
+  }
+
+  .hcab {
+    --cab-w: 76vw;
+    --cab-top: 54vh;
+  }
+  .hcab-cap {
+    top: 70px;
+    bottom: auto;
+  }
+  .hcab-stage {
+    left: 12vw;
+  }
+  .hcab-slot {
+    top: 250px;
+  }
+
+  .hdesk {
+    --desk-w: 84vw;
+    --desk-gap: 92vw;
+  }
+  .folder.hdesk-folder {
+    top: 40%;
+  }
+  .hdesk-cap {
+    top: auto;
+    bottom: 64px;
+  }
+  .hdesk-nav {
+    left: 16px;
+    right: auto;
+    bottom: 22px;
+  }
+}
+
+/* ---- Reduced motion -------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .hcap-in {
+    animation: none;
+  }
+  .htabs-folder,
+  .htabs-sheet,
+  .hcab-drawer,
+  .hcab-file,
+  .folder.hdesk-folder {
+    transition: none;
+  }
+}
+
+/* "Folder tilt" from the Design panel */
+.folder.hdesk-folder,
+.folder.hcab-file,
+.htabs-sheet {
+  rotate: var(--folder-tilt, 0deg);
+}

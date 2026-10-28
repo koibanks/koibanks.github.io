@@ -1,0 +1,875 @@
+/* ==========================================================================
+   Project page: the work, big, inside the front folder of a stack
+   Tweak: --work-w (how wide the work is), --stack-y (how far each folder
+   behind steps up), --tab-h / --tab-w (tab size). Folder look: src/styles.css
+   ========================================================================== */
+.case {
+  /* defaults; the Design panel overrides these (src/data/design.json) */
+  --work-w: var(--d-work-w, 1100px);
+  --stack-y: var(--d-stack-y, 46px);
+  --tab-h: var(--d-tab-h, 36px);
+  --tab-w: var(--d-tab-w, 18%);
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  background: var(--bg);
+}
+.case-wrap {
+  position: relative;
+  max-width: calc(var(--work-w) + 2 * clamp(16px, 5vw, 80px));
+  margin: 0 auto;
+  padding: calc(110px + 2 * var(--stack-y) + var(--tab-h)) clamp(16px, 5vw, 80px) 100px;
+}
+/* Back to the index: a folder tab poking out of the left edge; it slides out on hover */
+.case-back {
+  position: fixed;
+  z-index: 41;
+  left: 0;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 150px;
+  margin-top: -75px;
+  padding: 0;
+  border: 0;
+  border-radius: 0 16px 16px 0;
+  background-color: var(--home-tab, var(--folder, #b9d4dc)); /* "Home tab color" in the Design panel */
+  background-image: var(--paper);
+  background-blend-mode: multiply;
+  color: var(--tab-ink, #fff);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: lowercase;
+  cursor: pointer;
+  box-shadow: 3px 6px 16px rgb(0 0 0 / 0.45);
+  transform: translateX(-12px);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.case-back > span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+.case-back:hover,
+.case-back:focus-visible {
+  transform: translateX(0);
+}
+.case-back:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
+
+/* ---- The stack ------------------------------------------------------------- */
+.pstack {
+  position: relative;
+}
+/* The front folder holds the work with a margin all round, like the sketch */
+.folder.pfolder {
+  padding: calc(var(--folder-inset, 5%) * 0.72) calc(var(--folder-inset, 5%) * 0.8) calc(var(--folder-inset, 5%) * 0.88);
+}
+
+.case-nextbig {
+  display: block;
+  margin-top: 72px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  text-decoration: none;
+}
+.cn-k {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cn-t {
+  font-size: clamp(40px, 6vw, 96px);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+}
+.case-nextbig:hover .cn-t {
+  color: var(--highlight);
+}
+
+/* ---- The report (the work itself) ------------------------------------------ */
+.report {
+  container-type: inline-size; /* type sizes below are % of the sheet width */
+  color: #111;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; /* the slide keeps its own type, whatever the site font */
+  padding-bottom: 12px;
+  overflow: hidden;
+}
+/* A sheet that ends on a coloured strip (e.g. [heaven or]'s red note) stops right there, no white below */
+.report:has(> .hv-note:last-child) {
+  padding-bottom: 0;
+}
+.report img.cover {
+  display: block;
+}
+.rb-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr);
+  gap: 5%;
+  padding: 6% 5% 5% 5.5%;
+}
+.rb-intro--solo {
+  grid-template-columns: 1fr;
+}
+.rb-title {
+  margin: 0;
+  font-size: clamp(36px, 6cqw, 72px);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+/* Title set in the project's own typeface (e.g. Polished) */
+.rb-title--font {
+  font-family: var(--pfont);
+  font-weight: 400;
+  font-size: 17cqw;
+  line-height: 1;
+  letter-spacing: 0;
+  margin-top: -4.5cqw; /* sits close to the top edge, like the slide */
+}
+.rb-title-art {
+  width: 86%;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+.rb-kicker {
+  margin: 1.4cqw 0 0;
+  font-size: clamp(16px, 3.6cqw, 40px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+.rb-date {
+  margin: 0.4cqw 0 2.4cqw;
+  font-size: clamp(11px, 1.6cqw, 18px);
+}
+.rb-body p {
+  margin: 0 0 1.05em;
+  max-width: 40ch;
+  font-size: clamp(13px, 1.75cqw, 19px);
+  line-height: 1.38;
+}
+.rb-aside {
+  display: grid;
+  gap: 2cqw;
+  align-content: start;
+}
+/* Glyph tiles drawn with the project font (kind: 'css' + mark) */
+.rb-tile .cover-mark {
+  margin: auto;
+  padding: 0;
+  font-family: var(--pfont, inherit);
+  font-weight: 400;
+  font-size: 27cqw;
+  line-height: 1;
+  letter-spacing: 0;
+}
+.rb-tile {
+  width: 100%;
+  aspect-ratio: 196 / 203;
+  height: auto;
+  object-fit: contain !important;
+  background: #f4f2f2;
+}
+.rb-inset {
+  padding: 0.9cqw 2.5%;
+}
+.rb-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+div.rb-img {
+  aspect-ratio: 16 / 9;
+}
+.rb-images {
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  gap: 8px;
+}
+.rb-images .rb-img {
+  aspect-ratio: 4 / 3;
+}
+
+/* Live type in the project's font */
+.rb-set {
+  margin: 0;
+  font-family: var(--pfont);
+  line-height: 1.12;
+  white-space: pre-line;
+}
+.rb-grad {
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+.rb-set a {
+  color: inherit;
+  text-decoration: none;
+}
+.rb-set a:hover,
+.rb-set a:focus-visible {
+  text-decoration: underline;
+  text-decoration-color: #ffa27c;
+  text-underline-offset: 0.15em;
+}
+.rb-cols {
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+}
+.rb-col {
+  padding: 6% 6% 7%;
+  font-family: var(--pfont);
+  line-height: 1.32;
+  hyphens: auto;
+}
+.rb-col p {
+  margin: 0 0 1.1em;
+}
+
+/* Type tester: takes the grey square's place (same spot and size), no stroke, rounded */
+.rb-tester-wrap {
+  padding: 4px 5.5% 22px;
+}
+.rb-tester {
+  display: block;
+  width: 100%;
+  min-height: 23.5cqw;
+  font-family: var(--pfont);
+  line-height: 1.2;
+  color: #000;
+  border: 0;
+  border-radius: 18px;
+  padding: 2.4cqw 3cqw;
+  outline: none;
+  resize: vertical;
+  transition: box-shadow 0.2s;
+}
+.rb-tester::placeholder {
+  color: #000;
+  opacity: 0.35;
+}
+.rb-tester:focus-visible {
+  box-shadow: 0 0 0 3px rgb(0 0 0 / 0.18);
+}
+
+.rb-box.rb-inset {
+  padding: 0;
+  margin: 4px 5.5% 22px;
+}
+.rb-text {
+  padding: 6% 5.5% 3%;
+}
+.rb-text h3 {
+  margin: 0 0 10px;
+  font-size: clamp(20px, 3cqw, 32px);
+  letter-spacing: -0.02em;
+}
+.rb-text .rb-body p {
+  max-width: 60ch;
+}
+.rb-cta {
+  margin: 0;
+  padding: 12% 7%;
+  background: #000;
+  color: #ff4f5e;
+  text-align: center;
+  font-size: clamp(20px, 3cqw, 34px);
+  line-height: 1.3;
+}
+.rb-cta a {
+  color: #ff9b6a;
+}
+
+/* ---- Mobile ---------------------------------------------------------------- */
+@media (max-width: 767px) {
+  .case {
+    --stack-y: 30px;
+    --tab-h: 28px;
+    --tab-w: 20%;
+  }
+  .case-wrap {
+    padding: calc(80px + 2 * var(--stack-y) + var(--tab-h)) 12px 80px;
+  }
+  .folder.pfolder {
+    padding: 14px 3% 16px;
+  }
+  .case .ftab {
+    min-width: 0;
+    padding: 0 8px;
+    font-size: 9.5px;
+    letter-spacing: 0.01em;
+  }
+  .rb-intro {
+    grid-template-columns: 1fr;
+  }
+  .rb-aside {
+    grid-template-columns: 1fr 1fr;
+  }
+  .rb-body p {
+    font-size: 14px;
+  }
+}
+
+
+/* ==========================================================================
+   [heaven or]: magazine cover, label rows, wide spread, photo essay, EPUB,
+   closing note. Sizes are % of the sheet width (cqw), measured off the Figma page.
+   ========================================================================== */
+.hv-cover {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  color: #000;
+}
+.hv-cover > * {
+  position: absolute;
+  margin: 0;
+}
+.hv-bar {
+  inset: 0 0 auto 0;
+  height: 5.8cqw;
+}
+.suit {
+  display: block;
+  color: #e3202a;
+  width: 6.4cqw;
+  height: auto;
+}
+.hv-suit-top {
+  top: 3.6cqw;
+  right: 2.6cqw;
+  width: 7cqw;
+}
+.hv-suit-bottom {
+  top: 86cqw;
+  left: 3.2cqw;
+  width: 5.8cqw;
+}
+.hv-title {
+  top: 9.6cqw;
+  left: 4.6cqw;
+  font-size: 6cqw;
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.hv-heading {
+  top: 19.4cqw;
+  left: 5.3cqw;
+  font-size: 4.45cqw;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.015em;
+}
+.hv-date {
+  top: 24.4cqw;
+  left: 5.3cqw;
+  font-size: 2.7cqw;
+  line-height: 1;
+}
+.hv-body {
+  top: 28.2cqw;
+  left: 5.3cqw;
+  width: 51cqw;
+  font-size: 2.45cqw;
+  line-height: 1.2;
+}
+.hv-label {
+  margin: 0;
+  font-size: 4.6cqw;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.hv-cover-label {
+  top: 87.6cqw;
+  left: 47.4cqw;
+}
+
+/* The cut-out on the cover dances (flips side to side) while hovered */
+.hv-hero {
+  cursor: pointer;
+  transform-origin: 50% 80%;
+}
+.hv-hero-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  mix-blend-mode: multiply; /* its white background disappears into the page */
+}
+.hv-hero.is-dancing {
+  animation: hv-dance 0.84s steps(1, end) infinite;
+}
+@keyframes hv-dance {
+  0% { transform: scaleX(1) rotate(0deg) translateY(0); }
+  25% { transform: scaleX(-1) rotate(-5deg) translateY(-1.2cqw); }
+  50% { transform: scaleX(-1) rotate(3deg) translateY(0); }
+  75% { transform: scaleX(1) rotate(5deg) translateY(-1.2cqw); }
+  100% { transform: scaleX(1) rotate(0deg) translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hv-hero.is-dancing {
+    animation: none;
+    transform: scaleX(-1);
+  }
+}
+
+/* Label rows: "photo essay:", "epub:", "production:" */
+.hv-row {
+  position: relative;
+  height: 14cqw;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  color: #000;
+}
+.hv-row .hv-label {
+  position: absolute;
+  left: 47.4cqw;
+}
+.hv-suits {
+  display: flex;
+  gap: 0.3cqw;
+  margin-left: 3cqw;
+}
+.hv-row--right .hv-suits {
+  margin-left: auto;
+  margin-right: 3cqw;
+}
+
+/* Wider than the sheet: scrolls sideways */
+.hv-wide {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  cursor: grab;
+  scrollbar-width: thin;
+  scrollbar-color: #e3202a transparent;
+}
+.hv-wide.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+.hv-wide:focus-visible {
+  outline: 3px solid #e3202a;
+  outline-offset: -3px;
+}
+.hv-wide-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.hv-hint {
+  position: sticky;
+  left: calc(100% - 13cqw);
+  bottom: 2.4cqw;
+  display: inline-block;
+  margin-top: -6cqw;
+  padding: 0.6cqw 1.4cqw;
+  border-radius: 99px;
+  background: rgb(0 0 0 / 0.75);
+  color: #fff;
+  font-size: max(11px, 1.5cqw);
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  animation: hv-nudge 1.6s ease-in-out infinite;
+}
+.hv-hint.is-gone {
+  opacity: 0;
+}
+@keyframes hv-nudge {
+  50% { translate: 0.8cqw 0; }
+}
+
+/* Photo essay */
+.hv-essay {
+  padding: 9.2cqw 0 9.4cqw; /* full width, red band above and below */
+}
+.hv-carousel {
+  position: relative;
+}
+.hv-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  cursor: grab;
+  background: #000;
+}
+.hv-track::-webkit-scrollbar {
+  display: none;
+}
+.hv-track.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+.hv-track:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+.hv-slide {
+  position: relative;
+  flex: 0 0 100%;
+  margin: 0;
+  aspect-ratio: 1449 / 1104;
+  scroll-snap-align: start;
+}
+.hv-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  -webkit-user-drag: none;
+}
+.hv-counter {
+  position: absolute;
+  right: 2.4cqw;
+  bottom: 2.4cqw;
+  margin: 0;
+  padding: 0.5cqw 1.3cqw;
+  border-radius: 99px;
+  background: rgb(0 0 0 / 0.55);
+  color: #fff;
+  font-size: max(11px, 1.6cqw);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+}
+/* Edit images only: add / remove photos */
+.hv-add,
+.hv-remove {
+  display: none;
+}
+body.is-imaging .hv-add {
+  display: block;
+  position: absolute;
+  z-index: 2;
+  top: calc(100% + 1.2cqw);
+  left: 50%;
+  translate: -50% 0;
+  white-space: nowrap;
+  margin: 0;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 99px;
+  background: #fff;
+  color: #000;
+  font: 600 13px/1 system-ui, sans-serif;
+  cursor: pointer;
+}
+body.is-imaging .hv-remove {
+  display: grid;
+  place-items: center;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 50%;
+  background: #000;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* EPUB */
+.hv-epub-wrap {
+  display: grid;
+  place-items: center;
+  min-height: 104cqw;
+  padding: 6cqw;
+}
+.hv-epub-empty {
+  margin: 0;
+  color: #fff;
+  font-size: 2.7cqw;
+}
+.hv-epub-wrap > .hv-epub-empty[data-slot] {
+  display: grid;
+  place-items: center;
+  align-self: stretch;
+  justify-self: stretch;
+}
+.hv-epub {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  width: 100%;
+  height: 92cqw;
+  border-radius: 1.4cqw;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 1.4cqw 4cqw rgb(0 0 0 / 0.35);
+}
+.hv-epub:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
+}
+.hv-epub-page {
+  min-height: 0;
+  margin: 3cqw 3cqw 0; /* margin, not padding: the reader measures this box to lay out pages */
+  overflow: hidden;
+}
+.hv-epub-status {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  font-size: max(12px, 1.8cqw);
+  color: #555;
+}
+.hv-epub-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2.4cqw;
+  padding: 1.4cqw;
+  font-size: max(12px, 1.6cqw);
+  color: #333;
+}
+.hv-epub-bar button {
+  padding: 0.4cqw 1.6cqw;
+  border: 0;
+  border-radius: 99px;
+  background: #2f8a3c;
+  color: #fff;
+  font-size: inherit;
+  cursor: pointer;
+}
+.hv-epub-bar button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.hv-epub-bar a {
+  color: inherit;
+}
+
+/* Closing note */
+.hv-note {
+  padding: 2.2cqw 3cqw;
+}
+.hv-note p {
+  margin: 0;
+  text-align: right;
+  white-space: pre-line;
+  font-size: max(9px, 1.75cqw);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* Narrow sheets (phones): the cover stacks instead of being placed freely */
+@container (max-width: 560px) {
+  .hv-cover {
+    height: auto !important;
+    padding: 10cqw 5cqw 18cqw;
+  }
+  .hv-cover > * {
+    position: static;
+  }
+  .hv-cover > .hv-bar,
+  .hv-cover > .hv-suit-top,
+  .hv-cover > .hv-suit-bottom {
+    position: absolute;
+  }
+  .hv-suit-bottom {
+    top: auto;
+    bottom: 4cqw;
+  }
+  .hv-title { font-size: 11cqw; }
+  .hv-heading { margin-top: 3cqw; font-size: 7.5cqw; }
+  .hv-date { margin-top: 1cqw; font-size: 4cqw; }
+  .hv-body { width: auto; margin-top: 4cqw; font-size: 4.2cqw; }
+  .hv-hero { width: 100% !important; margin: 4cqw 0 0 auto; }
+  .hv-cover-label { margin: 6cqw 0 0 40cqw; }
+  .hv-label { font-size: 5.5cqw; }
+  .hv-note p { font-size: 3cqw; }
+}
+
+/* ==========================================================================
+   Free layout ('stage'), colour bars and live embeds (Project Two: LOCUS)
+   ========================================================================== */
+.rb-stage {
+  position: relative;
+  overflow: hidden;
+}
+.rb-piece {
+  position: absolute;
+  margin: 0;
+}
+.rb-piece--text {
+  line-height: 1.2;
+  white-space: pre;
+}
+.rb-piece--text span {
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 0.06em;
+}
+.rb-piece-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* Subtle hovers on the product cut-outs */
+.rb-piece.is-lift .rb-piece-img,
+.rb-piece.is-turn .rb-piece-img {
+  transition:
+    translate 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+    rotate 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 0.6s ease;
+  transform-origin: 50% 90%;
+}
+.rb-piece.is-lift:hover .rb-piece-img {
+  translate: 0 -1.4cqw;
+  filter: drop-shadow(0 2.4cqw 1.6cqw rgb(0 0 0 / 0.45));
+}
+.rb-piece.is-turn:hover .rb-piece-img {
+  rotate: -3deg;
+  translate: 0 -0.6cqw;
+}
+.rb-bar {
+  display: block;
+}
+.rb-embed {
+  position: relative;
+  width: 100%;
+}
+.rb-embed iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.rb-embed-open {
+  position: absolute;
+  right: 1.4cqw;
+  bottom: 1.4cqw;
+  padding: 0.5em 0.9em;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.72);
+  color: #fff;
+  font-size: max(11px, 1.1cqw);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.rb-embed:hover .rb-embed-open,
+.rb-embed-open:focus-visible {
+  opacity: 1;
+}
+.rb-embed-empty {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  margin: 0;
+  color: rgb(0 0 0 / 0.35);
+  font-size: max(12px, 1.6cqw);
+  text-transform: lowercase;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rb-piece.is-lift .rb-piece-img,
+  .rb-piece.is-turn .rb-piece-img {
+    transition: none;
+  }
+}
+@media (hover: none) {
+  .rb-embed-open {
+    opacity: 1;
+  }
+}
+
+/* The EPUB's own flipbook, filling the green panel */
+.hv-epub-wrap--flip {
+  display: block;
+  place-items: normal;
+  min-height: 0;
+  padding: 0;
+}
+.hv-flip {
+  position: relative;
+  aspect-ratio: 1312 / 872;
+  overflow: hidden;
+}
+.hv-flip iframe {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border: 0;
+  background: transparent;
+  color-scheme: normal;
+  transform-origin: 0 0;
+}
+.hv-flip-dl {
+  position: absolute;
+  right: 2cqw;
+  bottom: 1.6cqw;
+  color: #fff;
+  font-size: max(11px, 1.4cqw);
+  opacity: 0.8;
+}
+.hv-flip-dl:hover {
+  opacity: 1;
+}
+
+/* Photo essay: quarter-turn rotation (Edit images → rotate) */
+.hv-rot {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.hv-rot > .hv-photo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+}
+/* Sideways: swap width and height so the turned photo still fills the frame */
+.hv-rot[data-rot='90'] > .hv-photo,
+.hv-rot[data-rot='270'] > .hv-photo {
+  width: calc(100cqw * 1104 / 1449);
+  height: 100cqw;
+}
+body.is-imaging .hv-rotate {
+  display: block;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 7px 12px;
+  border: 0;
+  border-radius: 99px;
+  background: #000;
+  color: #fff;
+  font: 600 13px/1 system-ui, sans-serif;
+  cursor: pointer;
+}
+.hv-rotate {
+  display: none;
+}
+body.is-imaging .hv-add {
+  padding: 12px 20px;
+  font-size: 15px;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.3);
+}
+.hv-add span {
+  font-weight: 400;
+  opacity: 0.6;
+}
+.hv-essay.is-drop-add {
+  outline: 4px dashed #fff;
+  outline-offset: -10px;
+}

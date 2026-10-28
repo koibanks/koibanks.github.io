@@ -1,0 +1,43 @@
+@charset "UTF-8";
+/* Online-magazine style reader: the open issue on a dark table, nothing else. Viewport 1312 x 872. */
+html, body { margin: 0; padding: 0; }
+body {
+  width: 1312px; height: 872px; position: relative; overflow: hidden;
+  background-color: #141414;
+  background-image: radial-gradient(ellipse 62% 70% at 50% 48%, #2a2a2a 0%, #181818 60%, #0d0d0d 100%);
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+}
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); margin: -1px; padding: 0; border: 0; }
+
+#stage { position: absolute; left: 80px; top: 40px; width: 1152px; height: 792px; transition: transform .6s cubic-bezier(.3,.7,.2,1); }
+#stage.front { transform: translateX(-288px); }
+#stage.back { transform: translateX(288px); }
+#stage.now { transition: none; }
+
+#book { position: absolute; left: 0; top: 0; width: 1152px; height: 792px; }
+.page { background: #f7f7f4; overflow: hidden; }
+.page img { position: absolute; left: 0; top: 0; width: 576px; height: 792px; display: block; }
+/* paper curving into the binding, as in the printed copy */
+.page .gut { position: absolute; top: 0; width: 70px; height: 792px; pointer-events: none; }
+.page.r .gut { left: 0; background: linear-gradient(90deg, rgba(40,30,20,.30) 0%, rgba(40,30,20,.12) 18%, rgba(40,30,20,.04) 45%, rgba(40,30,20,0) 100%); }
+.page.l .gut { right: 0; background: linear-gradient(270deg, rgba(40,30,20,.30) 0%, rgba(40,30,20,.12) 18%, rgba(40,30,20,.04) 45%, rgba(40,30,20,0) 100%); }
+.page .sheen { position: absolute; inset: 0; pointer-events: none; }
+.page.r .sheen { background: linear-gradient(90deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.06) 65%, rgba(0,0,0,.035) 100%); }
+.page.l .sheen { background: linear-gradient(270deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.06) 65%, rgba(0,0,0,.035) 100%); }
+
+/* page-block thickness at the fore-edges; the right block shows the red tab printed to the edge */
+.edge { position: absolute; top: 2px; height: 788px; pointer-events: none; transition: width .5s, opacity .3s; }
+#edgeR { left: 1152px; background: repeating-linear-gradient(90deg, #a51a1f 0, #a51a1f 1px, #7c1216 1px, #7c1216 2px); box-shadow: 3px 0 6px rgba(0,0,0,.45); border-radius: 0 2px 2px 0; }
+#edgeL { right: 1152px; background: repeating-linear-gradient(90deg, #e9e5dc 0, #e9e5dc 1px, #c9c4b8 1px, #c9c4b8 2px); box-shadow: -3px 0 6px rgba(0,0,0,.45); border-radius: 2px 0 0 2px; }
+#shadow { position: absolute; left: 0; top: 0; height: 792px; box-shadow: 0 24px 50px rgba(0,0,0,.6), 0 4px 10px rgba(0,0,0,.45); pointer-events: none; transition: left .6s, width .6s; }
+
+.arrow {
+  position: absolute; top: 396px; width: 48px; height: 80px; margin-top: -40px; border: 0; padding: 0; background: transparent; cursor: pointer;
+  opacity: .45; transition: opacity .2s; -webkit-appearance: none; appearance: none;
+}
+.arrow:hover { opacity: 1; }
+.arrow:disabled { opacity: 0; cursor: default; }
+.arrow svg { width: 48px; height: 80px; display: block; }
+#prev { left: 14px; } #next { right: 14px; }
+.arrow:focus { outline: none; }
+.arrow:focus-visible { outline: 2px solid #e8e4dc; outline-offset: 2px; border-radius: 6px; }

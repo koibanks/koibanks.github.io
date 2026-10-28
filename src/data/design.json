@@ -1,0 +1,119 @@
+{
+  "look": {
+    "radius": 22,
+    "tabRadius": 18,
+    "tabSlant": 5,
+    "paper": 1,
+    "shadow": 1,
+    "edge": 1,
+    "inset": 5,
+    "peek": 48,
+    "ink": "#ffffff"
+  },
+  "homeTab": {
+    "color": ""
+  },
+  "folder": {
+    "size": 63,
+    "x": 6.5,
+    "y": 0,
+    "lean": 15,
+    "turn": 10
+  },
+  "indent": 6,
+  "text": {
+    "site.name": "koi",
+    "site.role": "designer",
+    "p.polished.role": "Designer",
+    "p.polished.description": "a tactical display typeface.",
+    "p.polished.title": "polished"
+  },
+  "media": {
+    "p.polished.report.0.0": "work/polished/polished_uppercase.gif",
+    "p.polished.report.0.1": "work/polished/polished_lowercase_numbers.gif",
+    "p.heaven-or.report.2": "work/heaven-or/Rectangle-14.png",
+    "p.heaven-or.report.3": "work/heaven-or/Rectangle-13.png",
+    "p.heaven-or.report.9": "work/heaven-or/heaven-or-full-cover-1.png",
+    "p.heaven-or.report.10": "work/heaven-or/heaven-or-full-cover-2.png",
+    "p.heaven-or.report.11": "work/heaven-or/heaven-or-full-cover-1-1.png",
+    "p.heaven-or.report.1": "work/heaven-or/Rectangle-12.png",
+    "p.heaven-or.report.5.0": "work/heaven-or/Rectangle-1.png",
+    "p.locus.report.5": "work/locus/locus-logo-sonar-1.mp4"
+  },
+  "lists": {
+    "p.heaven-or.report.5": [
+      "work/heaven-or/Rectangle-13-1.png",
+      "work/heaven-or/Rectangle-14-1.png",
+      "work/heaven-or/Rectangle-17.png",
+      "work/heaven-or/Rectangle-18.png"
+    ]
+  },
+  "rotate": {
+    "work/heaven-or/Rectangle-1.png": 180
+  },
+  "textSide": "right",
+  "textAlign": "right",
+  "fonts": {
+    "display": "geist",
+    "body": "ibm-plex-sans",
+    "label": "ibm-plex-sans"
+  },
+  "positions": {
+    "header.name": {
+      "x": -4.7,
+      "y": 89.9,
+      "s": 1
+    },
+    "tabs.stack": {
+      "x": 0.1,
+      "y": 0,
+      "s": 1
+    },
+    "split.title": {
+      "x": 5.2,
+      "y": -61.9,
+      "s": 1
+    },
+    "split.index": {
+      "x": 5.3,
+      "y": 72.2,
+      "s": 1
+    },
+    "header.about": {
+      "x": -93.5,
+      "y": 2.3,
+      "s": 1
+    },
+    "split.work": {
+      "x": 2.8,
+      "y": -1.5,
+      "s": 1
+    }
+  },
+  "covers": {
+    "polished": "work/polished/p1.png",
+    "heaven-or": "work/heaven-or/Rectangle-6.png",
+    "locus": "work/locus/Group-1.png"
+  },
+  "folderTilt": -11,
+  "home": "split",
+  "colors": {
+    "bg": "#0d0d0d",
+    "panel": "#000000",
+    "text": "#ededea",
+    "muted": "#ff7070",
+    "highlight": "#f3ee72"
+  },
+  "folders": {
+    "polished": "#3b3b3b",
+    "heaven-or": "#e62200",
+    "locus": "#ffa200"
+  },
+  "stack": {
+    "step": 30,
+    "tabHeight": 36,
+    "tabWidth": 21
+  },
+  "workWidth": 1390,
+  "cabinet": "#b9b5ab"
+}

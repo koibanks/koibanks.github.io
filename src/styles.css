@@ -1,0 +1,692 @@
+/* ==========================================================================
+   Tweakables
+   ========================================================================== */
+:root {
+  /* Real paper texture for folders and tabs (a lit fibre surface, drawn once and tiled) */
+  --paper: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='360' height='360'><filter id='t' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' seed='7' stitchTiles='stitch' result='n'/><feDiffuseLighting in='n' lighting-color='white' surfaceScale='1.4' result='tooth'><feDistantLight azimuth='225' elevation='62'/></feDiffuseLighting><feTurbulence type='fractalNoise' baseFrequency='0.012 0.32' numOctaves='3' seed='3' stitchTiles='stitch' result='f'/><feColorMatrix in='f' type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -1.6 1.25' result='fibres'/><feComposite in='tooth' in2='fibres' operator='arithmetic' k1='0' k2='1' k3='0.14' k4='0' result='paper'/><feComponentTransfer in='paper'><feFuncR type='linear' slope='1.8' intercept='-0.77'/><feFuncG type='linear' slope='1.8' intercept='-0.77'/><feFuncB type='linear' slope='1.8' intercept='-0.78'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23t)'/></svg>");
+  --bg: #0d0d0d; /* page */
+  --panel: #000; /* right column on home */
+  --fg: #ededea; /* text */
+  --muted: #85837e; /* secondary text */
+  --line: rgb(255 255 255 / 0.14); /* rules */
+  --highlight: #f3ee72; /* stand-in notes, hover */
+
+
+  /* Home layout */
+  --home-split: 58fr 42fr; /* work | info */
+  --home-work-w: 640px; /* max width of the work on home */
+
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  font-feature-settings: 'tnum' 1;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+a {
+  color: inherit;
+}
+button {
+  font: inherit;
+  color: inherit;
+}
+:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.skip-link {
+  position: fixed;
+  left: 16px;
+  top: -60px;
+  z-index: 100;
+  border: 0;
+  background: var(--fg);
+  color: var(--bg);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.skip-link:focus {
+  top: 16px;
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px clamp(16px, 2.4vw, 32px) 34px var(--indent, 32px);
+  pointer-events: none;
+  font-size: 13px;
+  text-transform: lowercase;
+  letter-spacing: 0;
+}
+.site-header a {
+  pointer-events: auto;
+  text-decoration: none;
+}
+.hd-name {
+  display: grid;
+  gap: 2px;
+}
+.hd-role {
+  color: var(--muted);
+}
+.hd-link:hover,
+.hd-name:hover {
+  color: var(--highlight);
+}
+
+/* ==========================================================================
+   Folder stack (shared look: home + project page)
+   Folders are the same width and step straight up behind each other; each
+   file's tab sits at its own spot along the top edge (see src/lib/folders.ts).
+   ========================================================================== */
+.folder {
+  --noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.2  0 0 0 0 0.2  0 0 0 0 0.2  0 0 0 0.22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  position: relative;
+  display: block;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  text-align: inherit;
+  background-color: var(--folder);
+  background-image: var(--paper);
+  background-blend-mode: multiply;
+  border-radius: calc(var(--folder-radius, 22px) * 0.3) calc(var(--folder-radius, 22px) * 0.75) var(--folder-radius, 22px) var(--folder-radius, 22px);
+  color: #1c1c1c;
+  text-decoration: none;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / var(--edge, 0.45)) /* top edge catching the light */,
+    inset 0 0 0 1px rgb(0 0 0 / 0.07) /* cut edge of the card */,
+    0 2px 3px rgb(0 0 0 / calc(0.22 * var(--shadow-k, 1))) /* contact shadow */,
+    0 40px 80px -30px rgb(0 0 0 / calc(0.7 * var(--shadow-k, 1)));
+}
+/* Tab: a soft trapezoid on the folder's top edge */
+.ftab {
+  position: absolute;
+  bottom: calc(100% - 1px);
+  left: var(--tab-x);
+  width: var(--tab-w);
+  min-width: 128px;
+  height: var(--tab-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  isolation: isolate;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: lowercase;
+  white-space: nowrap;
+  color: var(--tab-ink, #fff); /* Design panel → Folder look → Tab text */
+}
+.ftab::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 -2px;
+  z-index: -1;
+  background-color: var(--folder);
+  background-image: var(--paper);
+  background-blend-mode: multiply;
+  border-radius: var(--tab-radius, 18px) var(--tab-radius, 18px) 0 0;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / var(--edge, 0.45));
+  transform: perspective(40px) rotateX(var(--tab-slant, 5deg)); /* slants the sides */
+  transform-origin: bottom;
+}
+/* Folders behind: same width, stepped straight up */
+.folder--behind {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--k) * var(--stack-y) * -1);
+  bottom: calc(var(--k) * var(--stack-y));
+  z-index: calc(10 - var(--k));
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.folder--behind:hover,
+.folder--behind:focus-visible {
+  transform: translateY(-6px);
+}
+.folder--behind:hover .ftab,
+.folder--behind:focus-visible .ftab {
+  color: var(--tab-ink, #fff);
+}
+.folder--front {
+  z-index: 20;
+}
+.folder:focus-visible {
+  outline-offset: 4px;
+}
+/* The work, sitting inside the front folder */
+.folder-sheet {
+  display: block;
+  background: #fff;
+  box-shadow:
+    0 1px 3px rgb(0 0 0 / 0.2),
+    0 22px 40px -22px rgb(0 0 0 / 0.55);
+}
+@keyframes folder-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+/* ==========================================================================
+   Home (Split index)
+   One solid background. A big 3D folder on the left whose work pops up out of
+   it; text in the right-hand corners (counter top right, title bottom right). Size, position, lean and turn are
+   in the Design panel (Folder section), saved in src/data/design.json.
+   ========================================================================== */
+.home {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--bg);
+}
+.home.is-hidden {
+  visibility: hidden;
+}
+.home-media {
+  position: absolute;
+  inset: 0;
+}
+.home-stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-items: center;
+  justify-items: end; /* sits next to the text; big sizes grow to the left */
+  padding: 120px calc(var(--indent) + min(26vw, 400px) + 3vw) 6vh 0;
+  perspective: 1800px;
+  perspective-origin: 50% 30%;
+}
+.hstack {
+  --stack-y: var(--home-peek, 48px); /* how far the folders behind peek out ("Peek" in the Design panel) */
+  --tab-h: 34px;
+  --tab-w: 19%;
+  position: relative;
+  display: grid;
+  width: var(--folder-size, 56vw); /* "Size" in the Design panel; big sizes run off the left edge */
+  transform-style: preserve-3d;
+  /* 3D: leaning back and turned a little. "Lean back" / "Turn" in the Design panel */
+  transform: rotateX(var(--folder-lean, 16deg)) rotateY(var(--folder-turn, -10deg));
+  transform-origin: 50% 75%;
+  rotate: var(--folder-tilt, 0deg);
+  translate: var(--folder-x, 0vw) var(--folder-y, 0vh);
+}
+.hstack-nav {
+  display: contents;
+}
+.hstack .ftab {
+  min-width: 112px;
+  font-size: 13px;
+  padding: 0 16px;
+}
+/* Folders behind sit further back in depth */
+.hstack .folder--behind {
+  transform: translateZ(calc(var(--k) * -30px));
+  animation: folder-in 0.5s 0.12s both cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.hstack .folder--behind:hover,
+.hstack .folder--behind:focus-visible {
+  transform: translateZ(calc(var(--k) * -30px)) translateY(-10px);
+}
+/* Soft shadow on the "floor" under the folder */
+.hstack::after {
+  content: '';
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: -5%;
+  height: 16%;
+  background: radial-gradient(closest-side, rgb(0 0 0 / 0.55), transparent);
+  transform: translateZ(-80px);
+  pointer-events: none;
+}
+/* Front folder: back panel + the work + a front flap that tips toward you */
+.folder.hfolder {
+  grid-area: 1 / 1;
+  padding: 44px var(--folder-inset, 5%) var(--folder-inset, 5%);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.hfolder-sheet {
+  position: relative;
+  z-index: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  /* the work pops up out of the folder, toward you */
+  transform: translateZ(26px); /* sits just proud of the folder; hover pulls it up */
+  box-shadow:
+    0 2px 4px rgb(0 0 0 / 0.18),
+    0 30px 50px -18px rgb(0 0 0 / 0.55);
+  transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.hfolder:hover .hfolder-sheet {
+  transform: translateZ(44px) translateY(-12%);
+}
+.hfolder-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+/* Text: in the right-hand corners, right-aligned, at the margin */
+.home-info {
+  position: absolute;
+  z-index: 2;
+  right: var(--indent);
+  text-align: right;
+  align-items: flex-end;
+  top: 120px;
+  bottom: 7vh;
+  width: min(26vw, 400px);
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+.home-info > * {
+  pointer-events: auto;
+}
+.home-top {
+  display: flex;
+  justify-content: flex-end;
+}
+.home-count {
+  height: 1em;
+  overflow: hidden;
+  font-size: clamp(72px, 8vw, 150px);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  margin-top: -0.12em;
+}
+.home-count-col {
+  display: block;
+  will-change: transform;
+}
+.home-count-col span {
+  display: block;
+  height: 1em;
+}
+.home-bottom {
+  margin-top: auto;
+}
+.home-details {
+  display: grid;
+}
+.home-detail {
+  grid-area: 1 / 1;
+  will-change: transform, opacity;
+}
+.home-title {
+  margin: 0 0 14px;
+  font-size: clamp(44px, 5vw, 96px);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+}
+.home-desc {
+  margin: 0 0 14px auto;
+  max-width: 32ch;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.home-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px 14px;
+  margin: 0;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.home-standin {
+  color: var(--highlight);
+}
+
+/* ==========================================================================
+   Cover art (placeholder CSS art + real images)
+   ========================================================================== */
+.cover {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+img.cover,
+video.cover {
+  display: block;
+}
+video.cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.cover-mark {
+  padding: 4% 5%;
+  font-weight: 700;
+  font-size: clamp(36px, 7vw, 140px);
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+}
+
+/* ==========================================================================
+   About
+   ========================================================================== */
+.about {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  overflow-y: auto;
+  padding: 120px clamp(20px, 8vw, 140px) 60px;
+  background: var(--bg);
+}
+.about > * {
+  max-width: 60ch;
+  font-size: 19px;
+  line-height: 1.55;
+}
+.about h1 {
+  font-size: clamp(44px, 7vw, 110px);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  margin: 8px 0 12px;
+  max-width: none;
+}
+.about h1:focus {
+  outline: none;
+}
+.about .mono {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.about-role {
+  color: var(--muted);
+}
+
+/* ==========================================================================
+   Mobile (< 768px)
+   ========================================================================== */
+@media (max-width: 767px) {
+  .hd-role {
+    display: none;
+  }
+  :root {
+    --indent: 20px !important;
+  }
+  .home-info {
+    top: 76px;
+    bottom: auto;
+    width: auto;
+    left: 20px;
+    right: 20px;
+  }
+  .home-top {
+    display: none;
+  }
+  .home-title {
+    font-size: 42px;
+    margin-bottom: 8px;
+  }
+  .home-desc {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  .home-stage {
+    padding: 250px 6% 8vh;
+    perspective: 1200px;
+  }
+  .hstack {
+    width: 100%;
+    transform: rotateX(10deg);
+    translate: none;
+  }
+  .hstack .ftab {
+    min-width: 0;
+    font-size: 9.5px;
+    padding: 0 8px;
+  }
+}
+
+/* ==========================================================================
+   Reduced motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .hfolder .folder-sheet,
+  .hstack .folder--behind,
+  .home-open span:last-child,
+  .folder--behind {
+    transition: none;
+  }
+  .hstack .folder--behind {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   Fonts and moved pieces (both set in the Design panel, saved in src/data/design.json)
+   ========================================================================== */
+/* Your own typeface, available as a font choice */
+@font-face {
+  font-family: 'Polished Extras';
+  src: url('/fonts/PolishedExtras-Regular.ttf');
+  font-display: swap;
+}
+:root {
+  --font-display: var(--font);
+  --font-label: var(--font);
+}
+/* Titles: the big type */
+.home-title,
+.hcap-title,
+.home-count,
+.about h1,
+.cn-t {
+  font-family: var(--font-display);
+}
+/* Labels: small uppercase bits */
+.site-header,
+.hidx,
+.home-tags,
+.home-hint,
+.home-caption,
+.home-open,
+.hcap-n,
+.ftab,
+.case-back,
+.cn-k,
+.hdesk-dot,
+.about .mono {
+  font-family: var(--font-label);
+}
+.hd-link,
+.hd-about {
+  display: inline-block; /* so it can be moved */
+}
+/* Moved pieces: offsets apply on desktop; phones keep their own layout */
+@media (min-width: 768px) {
+  [data-edit] {
+    translate: var(--ex, 0px) var(--ey, 0px);
+    scale: var(--es, 1);
+    rotate: var(--er, 0deg);
+  }
+}
+
+/* ==========================================================================
+   Front-page text: side and alignment (Design panel → Text)
+   ========================================================================== */
+:root[data-text-side='left'] .home-info {
+  left: var(--indent);
+  right: auto;
+}
+:root[data-text-side='left'] .home-stage {
+  justify-items: start;
+  padding: 120px 0 6vh calc(var(--indent) + min(26vw, 400px) + 3vw);
+}
+:root[data-text-align='left'] .home-info,
+:root[data-text-align='left'] .hcap {
+  text-align: left;
+  align-items: flex-start;
+}
+:root[data-text-align='left'] .home-top,
+:root[data-text-align='left'] .home-tags {
+  justify-content: flex-start;
+}
+:root[data-text-align='left'] .home-desc {
+  margin-left: 0;
+}
+:root[data-text-align='center'] .home-info,
+:root[data-text-align='center'] .hcap {
+  text-align: center;
+  align-items: center;
+}
+:root[data-text-align='center'] .home-top,
+:root[data-text-align='center'] .home-tags {
+  justify-content: center;
+}
+:root[data-text-align='center'] .home-desc {
+  margin-left: auto;
+  margin-right: auto;
+}
+:root[data-text-align='right'] .hcap {
+  text-align: right;
+}
+:root[data-text-align='right'] .hcap .home-tags {
+  justify-content: flex-end;
+}
+
+/* ==========================================================================
+   About preview: hovering "about" slides the index card down from it
+   ========================================================================== */
+.hd-about {
+  position: relative;
+  pointer-events: auto;
+}
+.hd-peek {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  display: grid;
+  gap: 8px;
+  width: min(340px, calc(100vw - 32px));
+  padding: 22px 22px 20px;
+  border-radius: 14px;
+  background-color: #f4f0e6;
+  background-image: var(--paper);
+  background-blend-mode: multiply;
+  color: #1b1b1b;
+  text-transform: none;
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1.45;
+  box-shadow: 0 2px 3px rgb(0 0 0 / 0.2), 0 30px 60px -20px rgb(0 0 0 / 0.7);
+  transform-origin: top right;
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 -14px;
+  rotate: 1.5deg;
+  scale: 0.96;
+  transition:
+    opacity 0.2s ease,
+    translate 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+    rotate 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+    scale 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+    visibility 0s linear 0.2s;
+}
+.hd-peek.is-left {
+  right: auto;
+  left: 0;
+  transform-origin: top left;
+  rotate: -1.5deg;
+}
+.hd-peek.is-open {
+  opacity: 1;
+  visibility: visible;
+  translate: 0 0;
+  rotate: -0.6deg;
+  scale: 1;
+  transition-delay: 0s;
+}
+.hd-peek:hover {
+  color: #1b1b1b;
+}
+.hd-peek-k {
+  font-family: var(--font-label);
+  font-size: 11px;
+  text-transform: lowercase;
+  color: rgb(0 0 0 / 0.5);
+}
+.hd-peek-name {
+  font-family: var(--font-display);
+  font-size: 26px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.hd-peek-role {
+  margin-bottom: 4px;
+  color: rgb(0 0 0 / 0.6);
+}
+.hd-peek-mail {
+  margin-top: 4px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hd-peek {
+    translate: 0 0;
+    rotate: 0deg;
+    scale: 1;
+    transition: opacity 0.15s ease, visibility 0s linear 0.15s;
+  }
+}
+@media (hover: none) {
+  .hd-peek {
+    display: none;
+  }
+}

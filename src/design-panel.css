@@ -1,0 +1,430 @@
+/* Dev-only Design panel. Uses fixed colors so it stays readable whatever you set. */
+.dpanel {
+  position: fixed;
+  z-index: 200;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%); /* bottom center, clear of page controls in the corners */
+  font: 13px/1.35 system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: #141414;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.dpanel-toggle {
+  display: block;
+  margin-left: auto;
+  padding: 8px 14px;
+  border: 1px solid #141414;
+  border-radius: 99px;
+  background: #f3ee72;
+  color: #141414;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.35);
+}
+.dpanel-toggle.is-dirty {
+  background: #ffb36b;
+}
+.dpanel-body {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  bottom: calc(100% + 10px);
+  width: 320px;
+  max-height: min(78vh, 760px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 14px;
+  border-radius: 12px;
+  background: #fbfaf6;
+  box-shadow: 0 20px 50px rgb(0 0 0 / 0.5);
+  overscroll-behavior: contain;
+}
+.dpanel fieldset {
+  margin: 0 0 14px;
+  padding: 0 0 12px;
+  border: 0;
+  border-bottom: 1px solid #e3e0d8;
+}
+.dpanel legend {
+  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6a675f;
+}
+.dp-radio {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.dp-radio:hover {
+  background: #f0ede4;
+}
+.dp-radio input {
+  margin-top: 3px;
+}
+.dp-radio span {
+  display: grid;
+}
+.dp-radio small {
+  color: #77746c;
+}
+.dp-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 0;
+}
+.dp-color {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dp-color code,
+.dp-range code {
+  font-size: 11px;
+  color: #77746c;
+}
+.dp-color input {
+  width: 34px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid #c9c5bb;
+  border-radius: 6px;
+  background: none;
+  cursor: pointer;
+}
+.dp-range {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+}
+.dp-range > span {
+  display: flex;
+  justify-content: space-between;
+}
+.dp-range input {
+  width: 100%;
+}
+.dp-note {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #77746c;
+}
+.dp-actions {
+  display: flex;
+  gap: 8px;
+}
+.dp-actions button {
+  flex: 1;
+  padding: 9px 10px;
+  border: 1px solid #141414;
+  border-radius: 8px;
+  background: #fff;
+  color: #141414;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.dp-actions .dp-save {
+  background: #141414;
+  color: #fff;
+}
+.dp-actions button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.dp-status {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: #6a675f;
+}
+.dpanel :focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* ---- Fonts ---- */
+.dp-font {
+  display: block;
+  padding: 4px 0 8px;
+}
+.dp-font select {
+  max-width: 170px;
+  padding: 4px 6px;
+  border: 1px solid #c9c5bb;
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+  color: #141414;
+}
+.dp-sample {
+  display: block;
+  max-width: 100%;
+  margin-top: 4px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: #141414;
+  color: #ededea;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dp-sample.is-big {
+  font-size: 26px;
+  letter-spacing: -0.03em;
+}
+
+/* ---- Move things ---- */
+.dp-move {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid #141414;
+  border-radius: 8px;
+  background: #fff;
+  color: #141414;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.dp-move.is-on {
+  background: #f3ee72;
+}
+.dp-selected {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #f0ede4;
+}
+.dp-link {
+  margin-top: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: #1d4ed8;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Outlines and labels on the page while moving */
+body.is-moving [data-edit] {
+  outline: 1.5px dashed rgb(243 238 114 / 0.85);
+  outline-offset: 6px;
+  cursor: grab;
+}
+body.is-moving [data-edit]:hover {
+  outline-style: solid;
+}
+body.is-moving [data-edit].is-edit-selected {
+  outline: 2px solid #f3ee72;
+  cursor: grabbing;
+}
+.move-tags {
+  position: fixed;
+  inset: 0;
+  z-index: 190;
+  pointer-events: none;
+}
+.move-tag {
+  position: absolute;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgb(243 238 114 / 0.9);
+  color: #141414;
+  font: 600 11px/1.4 system-ui, sans-serif;
+  white-space: nowrap;
+}
+.move-tag.is-selected {
+  background: #f3ee72;
+  box-shadow: 0 0 0 2px #141414;
+}
+.dp-hint {
+  display: block;
+  margin-top: 6px;
+  padding: 8px;
+  border-radius: 6px;
+  background: #fff4d6;
+  color: #5a4a12;
+  font-size: 12px;
+}
+.dp-hint code {
+  font-size: 11px;
+  word-break: break-all;
+}
+
+/* ---- Folder: cover photo picker ---- */
+.dp-sub {
+  margin: 10px 0 6px;
+  font-weight: 600;
+}
+.cpick-row {
+  padding: 6px 0;
+  border-top: 1px solid #ece9e1;
+}
+.cpick-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cpick-thumb {
+  flex: none;
+  width: 54px;
+  height: 36px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #ddd;
+}
+.cpick-thumb .cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.cpick-thumb .cover-mark {
+  font-size: 14px;
+}
+.cpick-name {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+}
+.cpick-name small {
+  color: #77746c;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cpick-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-top: 8px;
+}
+.cpick-opt {
+  aspect-ratio: 1;
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background: #e9e6de;
+  font: inherit;
+  font-size: 11px;
+  color: #141414;
+  cursor: pointer;
+}
+.cpick-opt img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.cpick-opt.is-on {
+  border-color: #141414;
+}
+.cpick-upload {
+  background: #fff;
+  border: 1px dashed #8a877f;
+  font-weight: 600;
+}
+
+/* Edit text mode: outline what can be edited */
+body.is-texting [contenteditable] {
+  outline: 1.5px dashed rgb(114 241 243 / 0.85);
+  outline-offset: 3px;
+  cursor: text;
+  border-radius: 2px;
+}
+body.is-texting [contenteditable]:hover {
+  outline-style: solid;
+}
+body.is-texting [contenteditable]:focus {
+  outline: 2px solid #72f1f3;
+  background: rgb(114 241 243 / 0.08);
+}
+.cpick-opt video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.dp-select {
+  max-width: 180px;
+  padding: 4px 6px;
+  border: 1px solid #c9c5bb;
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+  color: #141414;
+}
+.dp-seg {
+  display: inline-flex;
+  border: 1px solid #141414;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.dp-seg button {
+  padding: 4px 10px;
+  border: 0;
+  background: #fff;
+  font: inherit;
+  font-size: 12px;
+  color: #141414;
+  cursor: pointer;
+}
+.dp-seg button + button {
+  border-left: 1px solid #141414;
+}
+.dp-seg button.is-on {
+  background: #141414;
+  color: #fff;
+}
+.dp-input {
+  width: 160px;
+  padding: 4px 6px;
+  border: 1px solid #c9c5bb;
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+  color: #141414;
+}
+
+/* ---- Edit images mode ---- */
+body.is-imaging [data-slot] {
+  pointer-events: auto !important;
+  cursor: copy;
+  outline: 2px dashed rgb(255 255 255 / 0.85);
+  outline-offset: -4px;
+}
+body.is-imaging [data-slot]:hover,
+body.is-imaging [data-slot].is-drop {
+  outline: 3px solid #ffd84d;
+  outline-offset: -5px;
+  filter: brightness(1.08);
+}
+.dp-media-status {
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  max-width: min(560px, calc(100vw - 32px));
+  padding: 10px 16px;
+  border-radius: 14px;
+  background: #1b1b1b;
+  color: #f4f1ea;
+  font: 13px/1.4 system-ui, sans-serif;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.5);
+}
+.dp-media-status.is-ok {
+  background: #1f3b26;
+}
+.dp-media-status.is-warn {
+  background: #4a2a12;
+}
