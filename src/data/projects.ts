@@ -162,6 +162,10 @@ export type StageItem =
       tracking?: number;
       /** Use h2 for the title, so the page has a proper heading. */
       as?: 'h2' | 'p';
+      /** Width (% of sheet). Set it to let a paragraph wrap; without it the text stays on its lines. */
+      w?: number;
+      /** Line height, e.g. 1.4 for a paragraph. */
+      lines?: number;
     }
   | { kind: 'rule'; x: number; y: number; w: number; h: number; color: string };
 
@@ -331,19 +335,21 @@ export const projects: Project[] = [
       {
         // Title page fading into the orange definition, speakers placed like the frame.
         type: 'stage',
-        height: 147.4,
+        height: 155, // room below the speakers so they don't touch the photo underneath
         background: 'linear-gradient(180deg, #15171a 0%, #15171a 42%, #6b2e1f 66%, #ff5a2c 100%)',
         items: [
           { kind: 'image', art: { kind: 'image', src: 'work/locus/logo.png', alt: 'LOCUS' }, x: -5.2, y: 4.8, w: 53.2 },
           { kind: 'text', text: 'CONCEPT PRODUCT BRAND', x: 3.3, y: 18.9, size: 4.26, weight: 500, color: '#ede9e2', tracking: -0.01 },
           { kind: 'text', text: '.2026', x: 3.3, y: 23.4, size: 2.06, color: '#ede9e2' },
+          // The project description, wrapping beside the front-view speaker.
+          { kind: 'text', text: 'The brief was to create a brand around a small speaker system for small apartments. I focused on the biggest problem of apartment living: sound doesn’t stay where you want it. Thin walls mean your music becomes your neighbor’s music, so people just keep the volume down. My answer is Locus, a speaker for small apartments that spatially maps the apartment where sound can then be placed where you want it.', x: 3.3, y: 29, w: 54, size: 2.06, color: '#ede9e2', lines: 1.4 },
           { kind: 'image', art: { kind: 'image', src: 'work/locus/speaker-front.webp', alt: 'The LOCUS speaker from the front: a round mesh face with a glowing red eye, on a tripod' }, x: 65, y: 21.2, w: 31.3, hover: 'lift' },
           { kind: 'text', as: 'h2', text: 'LOCUS', x: 3.3, y: 76.2, size: 7.56, font: '"IBM Plex Mono", ui-monospace, monospace', weight: 300, color: '#ede9e2' },
-          { kind: 'rule', x: 3.3, y: 83.7, w: 92.3, h: 0.35, color: '#d9d9d9' },
+          { kind: 'rule', x: 3.3, y: 85.6, w: 92.3, h: 0.35, color: '#d9d9d9' }, // a little space under LOCUS
           {
             kind: 'text',
             x: 3.7,
-            y: 86.3,
+            y: 88.2,
             size: 2.27,
             font: '"IBM Plex Mono", ui-monospace, monospace',
             color: '#ede9e2',
@@ -352,7 +358,7 @@ export const projects: Project[] = [
           {
             kind: 'text',
             x: 9,
-            y: 90,
+            y: 91.9,
             size: 2.75,
             font: '"IBM Plex Mono", ui-monospace, monospace',
             color: '#ede9e2',

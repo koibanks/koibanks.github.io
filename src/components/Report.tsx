@@ -303,6 +303,8 @@ function StagePiece({ item: it, art, slot }: { item: StageItem; art?: CoverArt; 
         fontWeight: it.weight,
         color: it.color,
         letterSpacing: it.tracking ? `${it.tracking}em` : undefined,
+        ...(it.w ? { width: `${it.w}cqw`, whiteSpace: 'normal' as const } : {}),
+        ...(it.lines ? { lineHeight: it.lines } : {}),
       }}
     >
       {typeof it.text === 'string'
