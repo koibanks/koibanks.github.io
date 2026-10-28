@@ -2,11 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import { hrefFor } from '../hooks/useHashRoute';
 import { movable, useEditor } from '../lib/design';
 import { et, getSite, ui } from '../lib/text';
+import { MailslotIcon, MailslotPanel } from './Mailslot';
 
 export function Header({ aboutActive }: { aboutActive: boolean }) {
   const site = getSite();
   const { editing, texting, imaging } = useEditor();
   const [peek, setPeek] = useState(false);
+  const [mail, setMail] = useState(false); // the note panel (mail slot)
   const [left, setLeft] = useState(false); // open the card toward the side with room
   const wrap = useRef<HTMLDivElement>(null);
   const timer = useRef<number>(0);
@@ -42,10 +44,7 @@ export function Header({ aboutActive }: { aboutActive: boolean }) {
         ref={wrap}
         className="hd-about"
         {...movable('header.about', 'About link')}
-        onPointerEnter={(e) => e.pointerType !== 'touch' && open()}
         onPointerLeave={() => close()}
-        onFocus={open}
-        onBlur={() => close(0)}
         onKeyDown={(e) => e.key === 'Escape' && peek && (e.stopPropagation(), setPeek(false))}
       >
         <a
@@ -53,9 +52,13 @@ export function Header({ aboutActive }: { aboutActive: boolean }) {
           href={aboutActive ? hrefFor.cabinet : hrefFor.about}
           aria-current={aboutActive ? 'page' : undefined}
           onClick={() => setPeek(false)}
+          onPointerEnter={(e) => e.pointerType !== 'touch' && open()}
+          onFocus={open}
+          onBlur={() => close(0)}
         >
           {aboutActive ? <span {...et('ui.close')}>{ui('close', 'Close')}</span> : <span {...et('ui.about')}>{ui('about', 'About')}</span>}
         </a>
+        <MailslotIcon onOpen={() => (setPeek(false), setMail(true))} />
         {!aboutActive && (
           // A preview of the About page; the link above is the way in, so screen readers skip this copy.
           <a className={`hd-peek${peek ? ' is-open' : ''}${left ? ' is-left' : ''}`} href={hrefFor.about} aria-hidden="true" tabIndex={-1} onClick={() => setPeek(false)}>
@@ -71,6 +74,7 @@ export function Header({ aboutActive }: { aboutActive: boolean }) {
           </a>
         )}
       </div>
+      {mail && <MailslotPanel onClose={() => setMail(false)} />}
     </header>
   );
 }

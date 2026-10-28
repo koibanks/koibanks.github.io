@@ -4,6 +4,7 @@ import type { Project } from '../data/projects';
 import { hrefFor } from '../hooks/useHashRoute';
 import { flipFromRemembered, rememberFolder } from '../lib/flip';
 import { behindOf, folderColor, folderVars } from '../lib/folders';
+import { Lightbox } from './Lightbox';
 import { Report } from './Report';
 import '../case.css';
 import { et, ui } from '../lib/text';
@@ -115,6 +116,7 @@ export function CaseStudy({ projects, index, reduced, onBack }: Props) {
             </span>
             <div className="folder-sheet pfolder-sheet">
               <Report project={p} number={index + 1} />
+              <Lightbox />
             </div>
           </div>
         </div>

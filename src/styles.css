@@ -692,3 +692,289 @@ video.cover {
     display: none;
   }
 }
+
+/* ==========================================================================
+   Mail slot: under "about"; opens a note visitors can write or draw on
+   ========================================================================== */
+.hd-mailslot {
+  display: block;
+  margin-top: 8px;
+  padding: 2px;
+  border: 0;
+  background: none;
+  color: var(--fg);
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+.hd-mailslot svg {
+  display: block;
+  width: 28px;
+  height: auto;
+  overflow: visible;
+}
+.hd-mailslot-flap {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.hd-mailslot:hover,
+.hd-mailslot:focus-visible {
+  opacity: 1;
+  color: var(--highlight);
+}
+.hd-mailslot:hover .hd-mailslot-flap,
+.hd-mailslot:focus-visible .hd-mailslot-flap {
+  transform: translateY(-3px) scaleY(0.7); /* the flap lifts */
+}
+.hd-mailslot:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.mailslot {
+  position: fixed;
+  inset: 0;
+  z-index: 210;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  overflow-y: auto;
+  background: rgb(8 8 8 / 0.75);
+  backdrop-filter: blur(4px);
+  animation: mailslot-fade 0.25s ease;
+}
+@keyframes mailslot-fade {
+  from {
+    opacity: 0;
+  }
+}
+.mailslot-card {
+  position: relative;
+  width: min(680px, 100%);
+  padding: 26px 26px 22px;
+  border-radius: 16px;
+  background-color: #f4f0e6;
+  background-image: var(--paper);
+  background-blend-mode: multiply;
+  color: #1b1b1b;
+  font-family: var(--font);
+  font-size: 13px;
+  text-transform: none;
+  box-shadow: 0 2px 3px rgb(0 0 0 / 0.2), 0 40px 80px -20px rgb(0 0 0 / 0.8);
+  color-scheme: light;
+  animation: mailslot-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes mailslot-in {
+  from {
+    translate: 0 30px;
+    rotate: -2deg;
+    opacity: 0;
+  }
+}
+/* sending: the note slides up and away, into the slot */
+.mailslot-card.is-sending {
+  animation: mailslot-post 0.9s cubic-bezier(0.6, 0, 0.4, 1) forwards;
+}
+@keyframes mailslot-post {
+  40% {
+    translate: 0 8px;
+  }
+  to {
+    translate: 0 -40vh;
+    scale: 0.6 0.15;
+    opacity: 0;
+  }
+}
+.mailslot-x {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: #1b1b1b;
+  font-size: 22px;
+  cursor: pointer;
+}
+.mailslot-x:hover {
+  background: rgb(0 0 0 / 0.07);
+}
+.mailslot-k {
+  margin: 0;
+  font-family: var(--font-label);
+  font-size: 11px;
+  color: rgb(0 0 0 / 0.5);
+}
+.mailslot-big {
+  margin: 2px 0 16px;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.mailslot-field {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.mailslot-field > span {
+  color: rgb(0 0 0 / 0.6);
+}
+.mailslot-field textarea,
+.mailslot-field input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgb(0 0 0 / 0.15);
+  border-radius: 10px;
+  background: #fffdf7;
+  color: #1b1b1b;
+  font: inherit;
+  font-size: 15px;
+  resize: vertical;
+}
+.mailslot-field textarea:focus,
+.mailslot-field input:focus {
+  outline: 2px solid #1b1b1b;
+  outline-offset: 1px;
+}
+.mailslot-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.mailslot-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.mailslot-swatch {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 2px solid #fffdf7;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.25);
+  cursor: pointer;
+}
+.mailslot-swatch.is-on {
+  box-shadow: 0 0 0 2px #1b1b1b;
+}
+.mailslot-sep {
+  width: 1px;
+  height: 20px;
+  margin: 0 4px;
+  background: rgb(0 0 0 / 0.15);
+}
+.mailslot-size,
+.mailslot-tool {
+  display: grid;
+  place-items: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border: 1px solid rgb(0 0 0 / 0.15);
+  border-radius: 99px;
+  background: #fffdf7;
+  color: #1b1b1b;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.mailslot-size {
+  padding: 0;
+}
+.mailslot-size span {
+  display: block;
+  border-radius: 50%;
+  background: #1b1b1b;
+}
+.mailslot-size.is-on,
+.mailslot-tool.is-on {
+  background: #1b1b1b;
+  color: #fffdf7;
+}
+.mailslot-size.is-on span {
+  background: #fffdf7;
+}
+.mailslot-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 640 / 300;
+  border: 1px solid rgb(0 0 0 / 0.15);
+  border-radius: 10px;
+  background: #fffdf7;
+  cursor: crosshair;
+  touch-action: none; /* drawing with a finger shouldn't scroll the page */
+}
+.mailslot-canvas.is-erasing {
+  cursor: cell;
+}
+.mailslot-honey {
+  position: absolute;
+  left: -9999px;
+}
+.mailslot-foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+}
+.mailslot-error {
+  margin: 0;
+  color: #b0151d;
+}
+.mailslot-error a {
+  color: inherit;
+}
+.mailslot-send {
+  padding: 11px 20px;
+  border: 0;
+  border-radius: 99px;
+  background: #1b1b1b;
+  color: #fffdf7;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.mailslot-send:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+.mailslot-send:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.mailslot-thanks {
+  display: grid;
+  justify-items: start;
+  gap: 4px;
+  padding: 20px 0 4px;
+}
+.mailslot-thanks p {
+  margin: 0;
+}
+.mailslot-thanks .mailslot-send {
+  margin-top: 16px;
+}
+@media (max-width: 560px) {
+  .mailslot-row {
+    grid-template-columns: 1fr;
+  }
+  .mailslot-card {
+    padding: 22px 18px 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mailslot,
+  .mailslot-card,
+  .mailslot-card.is-sending {
+    animation: none;
+  }
+}

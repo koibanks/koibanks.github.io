@@ -80,6 +80,7 @@ export function useStepNavigation({ enabled, onStep, onJump }: Options) {
     };
 
     const onKey = (e: KeyboardEvent) => {
+      if (document.querySelector('.lightbox, .mailslot')) return; // an overlay is open: its keys come first
       if (e.altKey || e.ctrlKey || e.metaKey || skip(e)) return;
       const tag = (e.target as HTMLElement | null)?.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA') return;

@@ -381,13 +381,19 @@ function Wide({ image, slot, width, hint }: { image: CoverArt; slot: string; wid
       role="region"
       aria-label={`${image.alt} (scrolls sideways)`}
       onScroll={(e) => !scrolled && e.currentTarget.scrollLeft > 8 && setScrolled(true)}
+      // A drag shouldn't also count as a click (which would open the picture full screen).
+      onClickCapture={(e) => e.currentTarget.dataset.dragged && (e.preventDefault(), delete e.currentTarget.dataset.dragged)}
       onPointerDown={(e) => {
         if (e.pointerType !== 'mouse' || document.body.classList.contains('is-imaging')) return;
         const el = e.currentTarget;
         const x0 = e.clientX;
         const left = el.scrollLeft;
         el.classList.add('is-dragging');
-        const move = (ev: PointerEvent) => (el.scrollLeft = left - (ev.clientX - x0));
+        delete el.dataset.dragged;
+        const move = (ev: PointerEvent) => {
+          if (Math.abs(ev.clientX - x0) > 4) el.dataset.dragged = '1';
+          el.scrollLeft = left - (ev.clientX - x0);
+        };
         const up = () => {
           el.classList.remove('is-dragging');
           window.removeEventListener('pointermove', move);

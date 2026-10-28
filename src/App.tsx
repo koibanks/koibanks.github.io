@@ -112,6 +112,7 @@ export default function App() {
   useEffect(() => {
     if (view === 'home') return;
     const onKey = (e: KeyboardEvent) => {
+      if (document.querySelector('.lightbox, .mailslot')) return; // an overlay is open: its keys come first
       // Let Escape work normally while typing (e.g. in the font tester).
       const tag = (e.target as HTMLElement | null)?.tagName;
       if (e.key === 'Escape' && tag !== 'TEXTAREA' && tag !== 'INPUT') goHome();
