@@ -619,9 +619,7 @@ video.cover {
   width: min(340px, calc(100vw - 32px));
   padding: 22px 22px 20px;
   border-radius: 14px;
-  background-color: #f4f0e6;
-  background-image: var(--paper);
-  background-blend-mode: multiply;
+  background: #f4f0e6;
   color: #1b1b1b;
   text-transform: none;
   font-family: var(--font);
@@ -709,23 +707,25 @@ video.cover {
 }
 .hd-mailslot svg {
   display: block;
-  width: 28px;
+  width: 32px;
   height: auto;
   overflow: visible;
 }
-.hd-mailslot-flap {
-  transform-box: fill-box;
-  transform-origin: 50% 0;
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+/* the flag pivots at its foot: lying down at rest, up when you point at it */
+.hd-mailslot-flag {
+  transform-box: view-box;
+  transform-origin: 30px 13px;
+  transform: rotate(-90deg);
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .hd-mailslot:hover,
 .hd-mailslot:focus-visible {
   opacity: 1;
   color: var(--highlight);
 }
-.hd-mailslot:hover .hd-mailslot-flap,
-.hd-mailslot:focus-visible .hd-mailslot-flap {
-  transform: translateY(-3px) scaleY(0.7); /* the flap lifts */
+.hd-mailslot:hover .hd-mailslot-flag,
+.hd-mailslot:focus-visible .hd-mailslot-flag {
+  transform: rotate(0deg); /* flag up: there's mail */
 }
 .hd-mailslot:focus-visible {
   outline: 2px solid var(--fg);
@@ -755,9 +755,7 @@ video.cover {
   width: min(680px, 100%);
   padding: 26px 26px 22px;
   border-radius: 16px;
-  background-color: #f4f0e6;
-  background-image: var(--paper);
-  background-blend-mode: multiply;
+  background: #f4f0e6;
   color: #1b1b1b;
   font-family: var(--font);
   font-size: 13px;

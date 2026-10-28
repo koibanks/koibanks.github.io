@@ -2,18 +2,23 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { getSite } from '../lib/text';
 
-/** The little mail slot under "about": click it to write or draw a note. */
+/** A little mailbox under "about": click it to write or draw a note. The red flag goes up on hover. */
 export function MailslotIcon({ onOpen }: { onOpen: () => void }) {
   return (
-    <button type="button" className="hd-mailslot" onClick={onOpen} aria-label="Leave me a note" title="leave a note">
-      <svg viewBox="0 0 32 20" aria-hidden="true">
-        {/* the plate */}
-        <rect x="1" y="1" width="30" height="18" rx="3" fill="none" stroke="currentColor" strokeWidth="1.6" />
-        {/* the flap, which lifts on hover */}
-        <g className="hd-mailslot-flap">
-          <rect x="6" y="7" width="20" height="5" rx="2.5" fill="currentColor" />
+    <button type="button" className="hd-mailslot" onClick={onOpen} aria-label="Leave me a note" title="leave me a note">
+      <svg viewBox="0 0 40 32" aria-hidden="true">
+        {/* post */}
+        <rect x="18" y="19" width="4" height="12" rx="0.6" fill="currentColor" />
+        {/* the box, seen from the side: rounded front on the left */}
+        <path d="M3 20 V12 a7 7 0 0 1 7 -7 h20 a6 6 0 0 1 6 6 v9 z" fill="currentColor" />
+        {/* the front door's seam */}
+        <path d="M10.5 5.6 a6.4 6.4 0 0 1 0.1 14.2" fill="none" stroke="#0d0d0d" strokeOpacity="0.45" strokeWidth="1.2" />
+        {/* carrier flag on the side: lying flat at rest, straight up on hover */}
+        <g className="hd-mailslot-flag">
+          <rect x="29" y="1" width="2" height="13" rx="0.8" fill="#e3202a" />
+          <rect x="29" y="1" width="7.5" height="5" rx="0.8" fill="#e3202a" />
+          <circle cx="30" cy="13" r="1.6" fill="#0d0d0d" opacity="0.45" />
         </g>
-        <rect x="6" y="9" width="20" height="2" rx="1" fill="#000" opacity="0.55" />
       </svg>
     </button>
   );
@@ -184,7 +189,7 @@ export function MailslotPanel({ onClose }: { onClose: () => void }) {
           </div>
         ) : (
           <>
-            <p className="mailslot-k">mail slot</p>
+            <p className="mailslot-k">mailbox</p>
             <h2 id="mailslot-title" className="mailslot-big">
               leave me a note
             </h2>
