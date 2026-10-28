@@ -7,7 +7,7 @@ import { movable } from '../lib/design';
 import { flipFromRemembered, rememberFolder } from '../lib/flip';
 import { behindOf, folderVars, homeImage } from '../lib/folders';
 import { Cover } from './Cover';
-import { et, getSite, ui } from '../lib/text';
+import { et, getSite } from '../lib/text';
 
 interface Props {
   projects: Project[];
@@ -190,22 +190,6 @@ export function Home({ projects, index, active, reduced, onSelect }: Props) {
                 </h2>
                 <p className="home-desc" {...et(`p.${p.id}.description`, true)}>
                   {p.description}
-                </p>
-                <p className="home-tags">
-                  <span>
-                    [ <span {...et(`p.${p.id}.category`)}>{p.category}</span> ]
-                  </span>
-                  <span>
-                    [ <span {...et(`p.${p.id}.year`)}>{p.yearLabel ?? p.year}</span> ]
-                  </span>
-                  <span>
-                    [ <span {...et(`p.${p.id}.role`)}>{p.role}</span> ]
-                  </span>
-                  {p.standIn && (
-                    <span className="home-standin">
-                      [ <span {...et('ui.standin')}>{ui('standin', 'Stand-in')}</span> ]
-                    </span>
-                  )}
                 </p>
               </div>
             ))}
