@@ -335,12 +335,13 @@ button {
   justify-content: flex-end;
 }
 .home-count {
-  height: 1em;
+  height: 1.2em; /* room above and below the digits so the font isn't clipped */
   overflow: hidden;
   font-size: clamp(72px, 8vw, 150px);
-  line-height: 1;
+  line-height: 1.2;
   letter-spacing: -0.06em;
-  margin-top: -0.12em;
+  margin-top: -0.22em;
+  padding-right: 0.06em; /* the tight letter spacing would trim the last digit */
 }
 .home-count-col {
   display: block;
@@ -348,7 +349,7 @@ button {
 }
 .home-count-col span {
   display: block;
-  height: 1em;
+  height: 1.2em;
 }
 .home-bottom {
   margin-top: auto;

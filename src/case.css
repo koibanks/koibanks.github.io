@@ -338,6 +338,7 @@ div.rb-img {
 }
 .hv-cover > * {
   position: absolute;
+  z-index: 1;
   margin: 0;
 }
 .hv-bar {
@@ -402,6 +403,7 @@ div.rb-img {
 
 /* The cut-out on the cover dances (flips side to side) while hovered */
 .hv-hero {
+  z-index: 0; /* the cover text always sits on top of Elvis */
   cursor: pointer;
   transform-origin: 50% 80%;
 }

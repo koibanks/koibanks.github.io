@@ -218,7 +218,7 @@ export const projects: Project[] = [
     tools: ['Nail polish', 'UV lamp', 'Figma'],
     accent: '#e0262b',
     folderColor: '#b9d4dc',
-    feature: { kind: 'image', src: 'work/polished/words.png', alt: 'Polished set in red on paper: Coat, Basecoat, Topcoat, Layer, Brush, Stroke, Swipe…' },
+    feature: { kind: 'image', src: 'work/polished/words-hq.webp', alt: 'Polished set in red on paper: Coat, Basecoat, Topcoat, Layer, Brush, Stroke, Swipe…' },
     cover: { kind: 'image', src: 'work/polished/wordmark.png', alt: 'Polished wordmark', fit: 'contain', background: '#ffffff' },
     // The project's typeface, used by 'set', 'columns' and 'tester' blocks and the intro title.
     font: { family: 'Polished Extras', src: 'fonts/PolishedExtras-Regular.ttf' },
@@ -290,7 +290,7 @@ export const projects: Project[] = [
         backdrop: 'linear-gradient(180deg, #fff 0%, #9a9a9a 50%, #2a2a2a 100%)',
         image: {
           kind: 'image',
-          src: 'work/polished/words.png',
+          src: 'work/polished/words-hq.webp',
           alt: 'Set in red Polished on paper: Coat, Basecoat, Topcoat, Layer, Brush, Stroke, Swipe, Paint, Polish, Apply, Buff, File, Shape, Dry, Cure, Set, Seal, Harden, Flash, Lamp, Wipe, Remover, Acetone.',
         },
       },
@@ -408,7 +408,7 @@ export const projects: Project[] = [
         date: '.2026',
         body: 'A magazine issue about Las Vegas casino culture, built around the disorienting architecture designed to keep visitors inside, spending and losing track of time.',
         hero: { kind: 'image', src: 'work/heaven-or/elvis-cutout.png', alt: 'Red halftone Elvis impersonator, lying back and pointing' },
-        heroBox: { left: 44.5, top: 35.5, width: 55.5 },
+        heroBox: { left: 44.5, top: 42, width: 55.5 }, // just below the blurb
         suitTop: 'club',
         suitBottom: 'diamond',
         label: 'spread layouts:',
